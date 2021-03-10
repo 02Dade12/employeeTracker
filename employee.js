@@ -33,7 +33,7 @@ const firstAction = () => {
                 'View all Departments',
                 'View all Roles',
                 'View all Employees',
-                'Update employee Role',
+                'Update an Employees Role',
             ],
         })
         .then((res) => {
@@ -50,7 +50,7 @@ const firstAction = () => {
             } else if (res.action === 'View all Employees') {
                 viewEmployees();
             } else {
-                updateEmployees();
+                updateEmployee();
             }
         });
 };
@@ -127,7 +127,7 @@ function viewRoles() {
     })
 }
 
-// Functions for adding and viewing "Employees" below
+// Functions for adding, viewing, and updating "Employees" below
 function addEmployee() {
     inquirer
         .prompt([
@@ -164,6 +164,51 @@ function addEmployee() {
                     if (err) throw err;
                     viewEmployees();
                 })
+        })
+};
+
+function updateEmployee() {
+    inquirer
+        .prompt([
+            {
+                name: 'updateBoolean',
+                type: 'list',
+                message: 'Do you want to update an Employee?',
+                choices: [
+                    'yes',
+                    'no',
+                ]
+            },
+        ])
+        .then(res => {
+            if ('updateBoolean' === 'yes'){
+                inquirer
+                .prompt([
+                    {
+                        name: '',
+                        type: '',
+                        message'',
+                    },
+                    {
+                        name: 'updateRole',
+                        type: 'input',
+                        message: 'What is their new role ID?',
+                    }
+                ])
+                .then(res => {
+                connection.query("UPDATE employe SET ? WHERE ?",
+                {
+                    role_id: res.newRoleID,
+                },
+                function (err, res) {
+                    if (err) throw err;
+                    viewEmployees();
+                })
+                })
+            } else {
+                firstAction();
+            }
+            
         })
 };
 
