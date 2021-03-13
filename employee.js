@@ -182,16 +182,17 @@ function updateEmployee() {
             }
         ])
         .then(res => {
-            connection.query("UPDATE employe SET ? WHERE ?",
-                {
-                    first_name: res.selectPerson,
+            connection.query("UPDATE employe, SET ?, WHERE ?",
+                {   
                     role_id: res.updateRole,
+                    first_name: res.selectPerson,
                 },
                 function (err, res) {
                     if (err) throw err;
                     viewEmployees();
                 })
-        })
+        }); 
+        
 };
 
 function viewEmployees() {
@@ -201,54 +202,3 @@ function viewEmployees() {
         firstAction();
     })
 }
-
-
-
-/* function updateThisEmployee() {
-    inquirer
-        .prompt([
-            {
-                name: 'updateBoolean',
-                type: 'list',
-                message: 'Do you want update an Employee role?',
-                choices: [
-                    'yes',
-                    'no',
-                ]
-            },
-        ])
-        .then((res) => {
-            console.log(res);
-            if (res.choices === 'yes') {
-                updateThisEmployee();
-            } else {
-                firstAction();
-            }
-
-        })
-
-    inquirer
-        .prompt([
-            {
-                name: 'selectPerson',
-                type: 'input',
-                message: 'Who do you want to update?',
-            },
-            {
-                name: 'updateRole',
-                type: 'input',
-                message: 'What is their new role ID?',
-            }
-        ])
-        .then(res => {
-            connection.query("UPDATE employe SET ? WHERE ?",
-                {
-                    first_name: res.selectPerson,
-                    role_id: res.updateRole,
-                },
-                function (err, res) {
-                    if (err) throw err;
-                    viewEmployees();
-                })
-        })
-} */
